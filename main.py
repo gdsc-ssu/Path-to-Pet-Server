@@ -20,7 +20,7 @@ img_size =224
 model = ResNet50(weights='imagenet', include_top=False,input_shape=(img_size, img_size, 3),pooling='max')
 
 batch_size = 64
-root_dir = '/kaggle/input/caltech101/101_ObjectCategories'
+root_dir = './shorthair'
 
 img_gen = ImageDataGenerator(preprocessing_function=preprocess_input)
 
@@ -51,7 +51,7 @@ neighbors_pca_features = NearestNeighbors(n_neighbors=5,
                              algorithm='ball_tree',
                              metric='euclidean').fit(compressed_features)
 
-img_path = '/kaggle/input/ant-and-bee/hymenoptera_data/train/ants/0013035.jpg'
+img_path = './shorthair/18115667_2086.jpg'
 input_shape = (img_size, img_size, 3)
 img = image.load_img(img_path, target_size=(input_shape[0], input_shape[1]))
 img_array = image.img_to_array(img)
