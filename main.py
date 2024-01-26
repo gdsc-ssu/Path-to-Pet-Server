@@ -20,7 +20,7 @@ img_size =224
 model = ResNet50(weights='imagenet', include_top=False,input_shape=(img_size, img_size, 3),pooling='max')
 
 batch_size = 64
-root_dir = './shorthair'
+root_dir = '/home/everythinginssu/findog-ai/shorthair'
 
 img_gen = ImageDataGenerator(preprocessing_function=preprocess_input)
 
