@@ -39,6 +39,11 @@ feature_list = model.predict_generator(datagen, num_epochs,verbose = 1)
 
 print("Shape of feature_list = ", feature_list.shape)
 
+neighbors = NearestNeighbors(n_neighbors=5,
+                             algorithm='ball_tree',
+                             metric='euclidean')
+neighbors.fit(feature_list)
+
 # Get full path for all the images in our dataset
 
 filenames = [root_dir + '/' + s for s in datagen.filenames]
@@ -52,7 +57,7 @@ neighbors_pca_features = NearestNeighbors(n_neighbors=5,
                              algorithm='ball_tree',
                              metric='euclidean').fit(compressed_features)
 
-img_path = 'data/BritishShorthair/18115667_2086.jpg'
+img_path = 'data/BritishShorthair/38109292_633.jpg'
 input_shape = (img_size, img_size, 3)
 img = image.load_img(img_path, target_size=(input_shape[0], input_shape[1]))
 img_array = image.img_to_array(img)
