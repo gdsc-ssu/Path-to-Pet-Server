@@ -33,9 +33,10 @@ datagen = img_gen.flow_from_directory(root_dir,
 num_images = len(datagen.filenames)
 num_epochs = int(math.ceil(num_images / batch_size))
 
+print("Num images   = ", len(datagen.classes))
+
 feature_list = model.predict_generator(datagen, num_epochs,verbose = 1)
 
-print("Num images   = ", len(datagen.classes))
 print("Shape of feature_list = ", feature_list.shape)
 
 # Get full path for all the images in our dataset
