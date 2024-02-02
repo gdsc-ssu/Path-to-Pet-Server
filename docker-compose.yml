@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: path-to-pet-db
+    environment:
+      MYSQL_ROOT_PASSWORD: ggona12
+      MYSQL_DATABASE: path_to_pet
+      MYSQL_USER: myggona
+      MYSQL_PASSWORD: ggona12
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
