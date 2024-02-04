@@ -55,7 +55,7 @@ def page_animals(
 ):
     return get_animals(page=page, term=term, breed=breed, gender=gender, is_neutered=is_neutered, is_adopted=is_adopted, is_dog=is_dog)
 
-@app.post("/animals/", response_model=AnimalBase)
+@app.post("/animals", response_model=AnimalBase)
 def add_animal(
     breed: AnimalBreed = Form(...),
     gender: str = Form(...),
@@ -99,7 +99,7 @@ def fix_animal(
     is_adopted: Union[bool, None] = Form(None),
     is_dog: Union[bool, None] = Form(None),
     password: str = Form(None),
-    photo: Union[bytes, None] = None,
+    photo: UploadFile = File(None)
 ):
     return update_animal(
         animal_id=animal_id,

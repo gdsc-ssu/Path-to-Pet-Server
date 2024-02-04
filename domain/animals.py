@@ -11,6 +11,9 @@ from datetime import datetime, timedelta
 from domain.entity import Animal
 
 # from ai.ai import search_similar_images
+from domain.gcs import upload_file, delete_file
+
+GCS_BUCKET_NAME = 'path_to_pet_bucket'
 
 # MySQL 연결 정보 설정
 # db_url = f"mysql+pymysql://{dbinfo.db_username}:{dbinfo.db_password}@{dbinfo.db_host}:{dbinfo.db_port}/{dbinfo.db_name}"
@@ -27,15 +30,17 @@ page_size = 3
 
 
 def search_animals(photo, is_dog):
-    # TODO: 사진을 통해 유사한 이미지 검색
-    # similar_images = search_similar_images(photo, is_dog)
+    photo_url = upload_file(photo, is_dog, is_searching=True)
+    # similar_images = search_similar_images(photo_url, is_dog)
     similar_images = (3, 4, 8)
 
     if not similar_images:
         raise HTTPException(status_code=404, detail="No similar images found")
 
+    similar_images = [f"https://storage.googleapis.com/{GCS_BUCKET_NAME}/{image}"for image in similar_images]
+
     # 사진 이름으로 검색하기
-    query = session.query(Animal).filter(Animal.id.in_(similar_images))
+    query = session.query(Animal).filter(Animal.photo_url.in_(similar_images))
 
     animals = query.all()
 
@@ -88,9 +93,8 @@ def create_animals(
         password,
         photo
 ):
-    # TODO: 사진을 S3에 업로드
-    # photo_url = upload_to_gcs(photo)
-    photo_url = "test_url"
+    photo_url = upload_file(photo, breed, is_dog)
+    # photo_url = "test_url"
 
     db_animal = Animal(
         admission_date=datetime.now(),
@@ -164,9 +168,9 @@ def update_animal(
         db_animal.is_dog = is_dog
 
     if photo:
-        # remove_old_photo(db_animal.photo_url)
-        # photo_url = upload_to_gcs(photo)
-        photo_url = "test_url"
+        delete_file(db_animal.photo_url)
+        photo_url = upload_file(photo, breed, is_dog)
+        # photo_url = "test_url"
         db_animal.photo_url = photo_url
 
     try:
@@ -217,15 +221,6 @@ def delete_animal(animal_id: int, password: str):
         session.rollback()
         raise HTTPException(status_code=500, detail="Unexpected db error")
 
-    # remove_old_photo(db_animal.photo_url)
+    delete_file(db_animal.photo_url)
 
     return db_animal
-
-# 이미지를 GCS에 업로드하는 함수 & 로컬에 저장하는 함수
-# def upload_to_gcs(photo: UploadFile) -> str:
-#     blob = bucket.blob(photo.filename)
-#     blob.upload_from_file(photo.file, content_type=photo.content_type)
-#
-#     # 업로드된 이미지의 URL 반환
-#     photo_url = f"https://storage.googleapis.com/{GCS_BUCKET_NAME}/{photo.filename}"
-#     return photo_url

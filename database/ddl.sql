@@ -14,3 +14,9 @@ CREATE TABLE animals (
     is_adopted BOOLEAN not null,
     is_dog BOOLEAN not null
 );
+
+ALTER TABLE animals
+CHANGE COLUMN photo_url photo_url VARCHAR(1024) CHARACTER SET utf8;
+
+ALTER TABLE animals
+ADD CONSTRAINT uk_photo_url UNIQUE (photo_url);

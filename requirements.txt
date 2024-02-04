@@ -9,3 +9,4 @@ sqlalchemy
 pydantic
 pymysql
 python-multipart
+google-cloud-storage

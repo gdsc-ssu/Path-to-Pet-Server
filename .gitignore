@@ -1,2 +1,4 @@
 # Ignore MySQL data directory
 mysql-data/
+config/
+.env

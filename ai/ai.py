@@ -15,15 +15,26 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from sklearn.decomposition import PCA
 
-def search_similar_images(img_path, is_dog):
+# UPLOADS_DIR = '/home/everythinginssu/findog-ai/data'
+UPLOADS_DIR = '/Users/ggona/Documents/GitHub/Google Solution Challenge 2023/Path-to-Pet-Server/data'
+GCS_BUCKET_NAME = 'path_to_pet_bucket'
+
+def search_similar_images(gcs_url, is_dog):
+    destination_blob_name = gcs_url.split(f"https://storage.googleapis.com/{GCS_BUCKET_NAME}/")[1]
+
+    img_path = os.path.join(UPLOADS_DIR, destination_blob_name)
+
     img_size =224
 
     # 검색 이미지 저장
-
     model = ResNet50(weights='imagenet', include_top=False,input_shape=(img_size, img_size, 3),pooling='max')
 
     batch_size = 64
-    root_dir = '/home/everythinginssu/findog-ai/data'
+
+    if is_dog:
+        root_dir = '/home/everythinginssu/findog-ai/data/dog'
+    else:
+        root_dir = '/home/everythinginssu/findog-ai/data/cat'
 
     img_gen = ImageDataGenerator(preprocessing_function=preprocess_input)
 
@@ -61,7 +72,6 @@ def search_similar_images(img_path, is_dog):
                                  metric='euclidean').fit(compressed_features)
 
     # 검색 이미지 경로
-    img_path = '../data/BritishShorthair/38109292_633.jpg'
     input_shape = (img_size, img_size, 3)
     img = image.load_img(img_path, target_size=(input_shape[0], input_shape[1]))
     img_array = image.img_to_array(img)

@@ -7,8 +7,8 @@ from enum import Enum as PyEnum
 Base = declarative_base()
 
 class AnimalBreed(PyEnum):
-    GOLDEN_RETRIEVER = 'Golden Retriever'
-    BRITISH_SHORTHAIR = 'British Shorthair'
+    GOLDEN_RETRIEVER = 'GoldenRetriever'
+    BRITISH_SHORTHAIR = 'BritishShorthair'
 
 class Animal(Base):
     __tablename__ = 'animals'
