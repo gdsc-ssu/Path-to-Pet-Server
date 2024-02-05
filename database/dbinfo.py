@@ -1,5 +1,5 @@
-db_host = 'upd4te.c5lorqzqsphm.ap-northeast-2.rds.amazonaws.com'
-db_username = 'admin'
-db_password = 'decreaseco2'
-db_name = 'upd4te'
+db_host = '34.22.93.76'
+db_username = 'root'
+db_password = 'ggona12'
+db_name = 'path_to_pet'
 db_port = 3306

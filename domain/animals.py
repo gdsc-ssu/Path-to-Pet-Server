@@ -10,14 +10,14 @@ from datetime import datetime, timedelta
 
 from domain.entity import Animal
 
-# from ai.ai import search_similar_images
+from ai.ai import search_similar_images
 from domain.gcs import upload_file, delete_file
 
 GCS_BUCKET_NAME = 'path_to_pet_bucket'
 
 # MySQL 연결 정보 설정
-# db_url = f"mysql+pymysql://{dbinfo.db_username}:{dbinfo.db_password}@{dbinfo.db_host}:{dbinfo.db_port}/{dbinfo.db_name}"
-db_url = f"mysql+pymysql://myggona:ggona12@localhost:3306/path_to_pet"
+db_url = f"mysql+pymysql://{dbinfo.db_username}:{dbinfo.db_password}@{dbinfo.db_host}:{dbinfo.db_port}/{dbinfo.db_name}"
+# db_url = f"mysql+pymysql://myggona:ggona12@localhost:3306/path_to_pet"
 
 # SQLAlchemy 엔진 생성
 engine = create_engine(db_url)
@@ -31,8 +31,8 @@ page_size = 3
 
 def search_animals(photo, is_dog):
     photo_url = upload_file(photo, is_dog, is_searching=True)
-    # similar_images = search_similar_images(photo_url, is_dog)
-    similar_images = (3, 4, 8)
+    similar_images = search_similar_images(photo_url, is_dog)
+    # similar_images = (3, 4, 8)
 
     if not similar_images:
         raise HTTPException(status_code=404, detail="No similar images found")

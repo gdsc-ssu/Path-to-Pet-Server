@@ -15,8 +15,8 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from sklearn.decomposition import PCA
 
-# UPLOADS_DIR = '/home/everythinginssu/findog-ai/data'
-UPLOADS_DIR = '/Users/ggona/Documents/GitHub/Google Solution Challenge 2023/Path-to-Pet-Server/data'
+UPLOADS_DIR = '/home/everythinginssu/findog-ai/data'
+# UPLOADS_DIR = '/Users/ggona/Documents/GitHub/Google Solution Challenge 2023/Path-to-Pet-Server/data'
 GCS_BUCKET_NAME = 'path_to_pet_bucket'
 
 def search_similar_images(gcs_url, is_dog):
@@ -29,7 +29,7 @@ def search_similar_images(gcs_url, is_dog):
     # 검색 이미지 저장
     model = ResNet50(weights='imagenet', include_top=False,input_shape=(img_size, img_size, 3),pooling='max')
 
-    batch_size = 64
+    batch_size = 256
 
     if is_dog:
         root_dir = '/home/everythinginssu/findog-ai/data/dog'
