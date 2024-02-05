@@ -29,15 +29,15 @@ session = Session()
 page_size = 3
 
 
-def search_animals(photo, is_dog):
-    photo_url = upload_file(photo, is_dog, is_searching=True)
+def search_animals(photo, breed, is_dog):
+    photo_url = upload_file(photo, breed, is_dog, is_searching=True)
     similar_images = search_similar_images(photo_url, is_dog)
     # similar_images = (3, 4, 8)
 
     if not similar_images:
         raise HTTPException(status_code=404, detail="No similar images found")
 
-    similar_images = [f"https://storage.googleapis.com/{GCS_BUCKET_NAME}/{image}"for image in similar_images]
+    similar_images = [f"https://storage.googleapis.com/{GCS_BUCKET_NAME}/{image}"for image, _ in similar_images]
 
     # 사진 이름으로 검색하기
     query = session.query(Animal).filter(Animal.photo_url.in_(similar_images))

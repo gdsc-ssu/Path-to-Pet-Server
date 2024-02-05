@@ -39,9 +39,10 @@ class DeleteAnimalRequest(BaseModel):
 @app.get("/animals/image", response_model=List[AnimalBase])
 def search_and_page_animals(
     is_dog: bool = Form(...),
+    breed: AnimalBreed = Form(...),
     photo: UploadFile = File(...)
 ):
-    return search_animals(photo=photo, is_dog=is_dog)
+    return search_animals(photo=photo, breed=breed, is_dog=is_dog)
 
 @app.get("/animals", response_model=List[AnimalBase])
 def page_animals(

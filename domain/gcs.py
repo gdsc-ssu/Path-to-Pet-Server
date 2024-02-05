@@ -4,11 +4,13 @@ from google.oauth2 import service_account
 import uuid
 import os
 from dotenv import load_dotenv
+import shutil
+from copy import deepcopy
 
 load_dotenv()
 
-# UPLOADS_DIR = '/home/everythinginssu/findog-ai/data'
-UPLOADS_DIR = '/Users/ggona/Documents/GitHub/Google Solution Challenge 2023/Path-to-Pet-Server/data'
+UPLOADS_DIR = '/home/everythinginssu/Path-to-Pet-Server/data'
+# UPLOADS_DIR = '/Users/ggona/Documents/GitHub/Google Solution Challenge 2023/Path-to-Pet-Server/data'
 
 # GCS 버킷 이름과 GCP 프로젝트 ID를 설정
 # Credentials 객체 생성
@@ -31,6 +33,7 @@ def upload_file(file, breed, is_dog, is_searching=False):
     else:
         destination_blob_name = f"searching/{breed.value}/{file_name}"
 
+    tmp_file = deepcopy(file)
     # GCS 버킷 객체 가져오기
     bucket = storage_client.bucket(GCS_BUCKET_NAME)
 
@@ -46,8 +49,8 @@ def upload_file(file, breed, is_dog, is_searching=False):
     os.makedirs(directory_path, exist_ok=True)
 
     # 업로드된 파일을 로컬 디렉토리에 저장
-    with open(file_path, "wb") as local_file:
-        local_file.write(file.file.read())
+    with open(file_path, "wb+") as file_object:
+        shutil.copyfileobj(tmp_file.file, file_object)
 
     # 업로드한 파일의 GCS URL 반환
     gcs_url = f"https://storage.googleapis.com/{GCS_BUCKET_NAME}/{destination_blob_name}"
