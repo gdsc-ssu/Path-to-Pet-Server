@@ -24,10 +24,25 @@ class AnimalBase(BaseModel):
     photo_url: Optional[str]
     is_adopted: bool
     is_dog: bool
-    password: str
 
     class Config:
         orm_mode = True
+
+class AnimalWithProb(BaseModel):
+    id: int
+    admission_date: datetime
+    breed: Optional[AnimalBreed]
+    gender: Optional[str]
+    is_neutered: Optional[bool]
+    name: Optional[str]
+    shelter_location: Optional[str]
+    shelter_contact: Optional[str]
+    location: Optional[str]
+    notes: Optional[str]
+    photo_url: Optional[str]
+    is_adopted: bool
+    is_dog: bool
+    probability: float
 
 class UpdateAnimalAdoptedRequest(BaseModel):
     is_adopted: bool
@@ -36,7 +51,7 @@ class UpdateAnimalAdoptedRequest(BaseModel):
 class DeleteAnimalRequest(BaseModel):
     password: str
 
-@app.get("/animals/image", response_model=List[AnimalBase])
+@app.get("/animals/image", response_model=List[AnimalWithProb])
 def search_and_page_animals(
     is_dog: bool = Form(...),
     breed: AnimalBreed = Form(...),

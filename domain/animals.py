@@ -13,6 +13,8 @@ from domain.entity import Animal
 from ai.ai import search_similar_images
 from domain.gcs import upload_file, delete_file
 
+from app import AnimalWithProb
+
 GCS_BUCKET_NAME = 'path_to_pet_bucket'
 
 # MySQL 연결 정보 설정
@@ -37,14 +39,36 @@ def search_animals(photo, breed, is_dog):
     if not similar_images:
         raise HTTPException(status_code=404, detail="No similar images found")
 
-    similar_images = [f"https://storage.googleapis.com/{GCS_BUCKET_NAME}/{image}"for image, _ in similar_images]
+    prob_dict = {}
+    for image, prob in similar_images:
+        prob_dict[f"https://storage.googleapis.com/{GCS_BUCKET_NAME}/{image}"] = round(prob, 2)
 
     # 사진 이름으로 검색하기
     query = session.query(Animal).filter(Animal.photo_url.in_(similar_images))
 
     animals = query.all()
 
-    return animals
+    prob_animals = []
+    for a in animals:
+        prob_animal = AnimalWithProb(
+            id=a.id,
+            admission_date=a.admission_date,
+            breed=a.breed,
+            gender=a.gender,
+            is_neutered=a.is_neutered,
+            name=a.name,
+            shelter_location=a.shelter_location,
+            shelter_contact=a.shelter_contact,
+            location=a.location,
+            notes=a.notes,
+            photo_url=a.photo_url,
+            is_adopted=a.is_adopted,
+            is_dog=a.is_dog,
+            probability=prob_dict[a.photo_url]
+        )
+        prob_animals.append(prob_animal)
+
+    return prob_animals
 
 
 # null은 모두 검색
