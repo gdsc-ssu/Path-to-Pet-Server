@@ -13,8 +13,6 @@ from domain.entity import Animal
 from ai.ai import search_similar_images
 from domain.gcs import upload_file, delete_file
 
-from app import AnimalWithProb
-
 GCS_BUCKET_NAME = 'path_to_pet_bucket'
 
 # MySQL 연결 정보 설정
@@ -30,6 +28,21 @@ session = Session()
 
 page_size = 3
 
+class AnimalWithProb(BaseModel):
+    id: int
+    admission_date: datetime
+    breed: Optional[AnimalBreed]
+    gender: Optional[str]
+    is_neutered: Optional[bool]
+    name: Optional[str]
+    shelter_location: Optional[str]
+    shelter_contact: Optional[str]
+    location: Optional[str]
+    notes: Optional[str]
+    photo_url: Optional[str]
+    is_adopted: bool
+    is_dog: bool
+    probability: float
 
 def search_animals(photo, breed, is_dog):
     photo_url = upload_file(photo, breed, is_dog, is_searching=True)

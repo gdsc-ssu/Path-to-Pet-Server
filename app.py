@@ -5,7 +5,7 @@ import uvicorn
 
 from datetime import datetime
 
-from domain.animals import search_animals, get_animals, create_animals, delete_animal, update_animal, update_adopted_status
+from domain.animals import search_animals, get_animals, create_animals, delete_animal, update_animal, update_adopted_status, AnimalWithProb
 from domain.entity import Animal, AnimalBreed
 
 app = FastAPI()
@@ -27,22 +27,6 @@ class AnimalBase(BaseModel):
 
     class Config:
         orm_mode = True
-
-class AnimalWithProb(BaseModel):
-    id: int
-    admission_date: datetime
-    breed: Optional[AnimalBreed]
-    gender: Optional[str]
-    is_neutered: Optional[bool]
-    name: Optional[str]
-    shelter_location: Optional[str]
-    shelter_contact: Optional[str]
-    location: Optional[str]
-    notes: Optional[str]
-    photo_url: Optional[str]
-    is_adopted: bool
-    is_dog: bool
-    probability: float
 
 class UpdateAnimalAdoptedRequest(BaseModel):
     is_adopted: bool
