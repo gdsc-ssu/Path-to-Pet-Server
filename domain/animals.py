@@ -6,9 +6,12 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import func, desc
 
+from typing import Optional
+from pydantic import BaseModel
+
 from datetime import datetime, timedelta
 
-from domain.entity import Animal
+from domain.entity import Animal, AnimalBreed
 
 from ai.ai import search_similar_images
 from domain.gcs import upload_file, delete_file
