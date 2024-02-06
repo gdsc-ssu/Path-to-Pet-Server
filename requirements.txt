@@ -1,5 +1,5 @@
-tensorflow==2.2.0
-tensorflow-gpu==2.2.0
+tensorflow==2.5.0
+tensorflow-gpu==2.5.0
 scikit-learn==0.23.1
 tqdm
 pillow
@@ -11,3 +11,4 @@ pydantic
 pymysql
 python-multipart
 google-cloud-storage
+python-dotenv

@@ -59,7 +59,7 @@ def search_animals(photo, breed, is_dog):
     image_urls = []
     for image, prob in similar_images:
         image_urls.append(f"https://storage.googleapis.com/{GCS_BUCKET_NAME}/{image}")
-        prob_dict[f"https://storage.googleapis.com/{GCS_BUCKET_NAME}/{image}"] = float(prob)
+        prob_dict[f"https://storage.googleapis.com/{GCS_BUCKET_NAME}/{image}"] = prob
         print(f"https://storage.googleapis.com/{GCS_BUCKET_NAME}/{image}")
 
     # 사진 이름으로 검색하기

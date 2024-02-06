@@ -95,8 +95,8 @@ def search_similar_images(gcs_url, is_dog):
     for index in indices[0]:
         similarity_score = cosine_similarity_pca(test_img_features.flatten(), feature_list[index])
         last_two_elements = '/'.join(filenames[index].split('/')[5:])
-        result.append((last_two_elements, f"{similarity_score:.2}"))
-        print(f"유사 이미지: {filenames[index]}, similarity score: {similarity_score:.2%}")
+        result.append((last_two_elements, similarity_score))
+        print(f"유사 이미지: {filenames[index]}, similarity score: {similarity_score}%")
 
     # 검색 이미지 삭제
     return result
@@ -116,4 +116,4 @@ def cosine_similarity_pca(vector1, vector2):
     norm1 = np.linalg.norm(vector1)
     norm2 = np.linalg.norm(vector2)
     similarity = dot_product / (norm1 * norm2)
-    return similarity
+    return round(similarity, 2)*100
