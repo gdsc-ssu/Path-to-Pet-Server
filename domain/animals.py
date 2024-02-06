@@ -54,13 +54,16 @@ def search_animals(photo, breed, is_dog):
 
     if not similar_images:
         raise HTTPException(status_code=404, detail="No similar images found")
-
+    
     prob_dict = {}
+    image_urls = []
     for image, prob in similar_images:
-        prob_dict[f"https://storage.googleapis.com/{GCS_BUCKET_NAME}/{image}"] = round(prob, 2)
+        image_urls.append(f"https://storage.googleapis.com/{GCS_BUCKET_NAME}/{image}")
+        prob_dict[f"https://storage.googleapis.com/{GCS_BUCKET_NAME}/{image}"] = float(prob)
+        print(f"https://storage.googleapis.com/{GCS_BUCKET_NAME}/{image}")
 
     # 사진 이름으로 검색하기
-    query = session.query(Animal).filter(Animal.photo_url.in_(similar_images))
+    query = session.query(Animal).filter(Animal.photo_url.in_(image_urls))
 
     animals = query.all()
 

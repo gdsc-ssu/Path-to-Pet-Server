@@ -94,9 +94,8 @@ def search_similar_images(gcs_url, is_dog):
     result = []
     for index in indices[0]:
         similarity_score = cosine_similarity_pca(test_img_features.flatten(), feature_list[index])
-        origin_filename = filenames[index].split('/')[-1]
-        last_two_elements = ''.join(origin_filename.split('/')[-2:])
-        result.append((last_two_elements, similarity_score))
+        last_two_elements = '/'.join(filenames[index].split('/')[5:])
+        result.append((last_two_elements, f"{similarity_score:.2}"))
         print(f"유사 이미지: {filenames[index]}, similarity score: {similarity_score:.2%}")
 
     # 검색 이미지 삭제
