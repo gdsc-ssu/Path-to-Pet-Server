@@ -8,7 +8,17 @@ Base = declarative_base()
 
 class AnimalBreed(PyEnum):
     GOLDEN_RETRIEVER = 'GoldenRetriever'
+    CHIHUAHUA = 'Chihuahua'
+    GERMAN_SHEPHERD = 'GermanShepherd'
+    BEAGLE = 'Beagle'
+    BULLDOG = 'Bulldog'
+    POODLE = 'Poodle'
     BRITISH_SHORTHAIR = 'BritishShorthair'
+    AMERICAN_SHORTHAIR = 'AmericanShorthair'
+    BENGAL = 'Bengal'
+    SIAMESE = 'Siamese'
+    PERSIAN = 'Persian'
+    SCOTTISH_FOLD = 'ScottishFold'
 
 class Animal(Base):
     __tablename__ = 'animals'

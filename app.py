@@ -1,4 +1,5 @@
 from fastapi import FastAPI, UploadFile, File, Form
+from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional, List, Union
 from pydantic import BaseModel
 import uvicorn
@@ -9,6 +10,16 @@ from domain.animals import search_animals, get_animals, create_animals, delete_a
 from domain.entity import Animal, AnimalBreed
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class AnimalBase(BaseModel):
     id: int
