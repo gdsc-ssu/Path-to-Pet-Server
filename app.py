@@ -68,7 +68,7 @@ def page_animals(
 
 @app.post("/animals", response_model=AnimalBase)
 def add_animal(
-    breed: AnimalBreed = Form(...),
+    breed: Union[AnimalBreed, None] = Form(None),
     gender: Union[str, None] = Form(None),
     is_neutered: Union[bool, None] = Form(None),
     name: Union[str, None] = Form(None),
