@@ -53,7 +53,7 @@ def search_similar_images(gcs_url, is_dog):
 
     print("Shape of feature_list = ", feature_list.shape)
 
-    neighbors = NearestNeighbors(n_neighbors=5,
+    neighbors = NearestNeighbors(n_neighbors=10,
                                  algorithm='ball_tree',
                                  metric='euclidean')
     neighbors.fit(feature_list)
@@ -67,7 +67,7 @@ def search_similar_images(gcs_url, is_dog):
     pca.fit(feature_list)
     compressed_features = pca.transform(feature_list)
 
-    neighbors_pca_features = NearestNeighbors(n_neighbors=5,
+    neighbors_pca_features = NearestNeighbors(n_neighbors=10,
                                  algorithm='ball_tree',
                                  metric='euclidean').fit(compressed_features)
 
