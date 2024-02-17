@@ -46,7 +46,7 @@ class UpdateAnimalAdoptedRequest(BaseModel):
 class DeleteAnimalRequest(BaseModel):
     password: str
 
-@app.get("/animals/image", response_model=List[AnimalWithProb])
+@app.post("/animals/image", response_model=List[AnimalWithProb])
 def search_and_page_animals(
     is_dog: bool = Form(...),
     breed: AnimalBreed = Form(...),
