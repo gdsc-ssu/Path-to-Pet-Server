@@ -29,7 +29,7 @@ engine = create_engine(db_url)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-page_size = 3
+page_size = 6
 
 class AnimalWithProb(BaseModel):
     id: int
