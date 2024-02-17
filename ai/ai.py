@@ -98,8 +98,11 @@ def search_similar_images(gcs_url, is_dog):
         result.append((last_two_elements, similarity_score))
         print(f"유사 이미지: {filenames[index]}, similarity score: {similarity_score}%")
 
+    def sort_by_similarity_score(elem):
+        return elem[1]
+
     # 검색 이미지 삭제
-    return result
+    return sorted(result, key=sort_by_similarity_score, reverse=True)
 
 def similar_images(indices):
     plt.figure(figsize=(15,10), facecolor='white')

@@ -50,7 +50,6 @@ class AnimalWithProb(BaseModel):
 def search_animals(photo, breed, is_dog):
     photo_url = upload_file(photo, breed, is_dog, is_searching=True)
     similar_images = search_similar_images(photo_url, is_dog)
-    # similar_images = (3, 4, 8)
 
     if not similar_images:
         raise HTTPException(status_code=404, detail="No similar images found")
