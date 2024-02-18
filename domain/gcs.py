@@ -27,11 +27,11 @@ def upload_file(file, breed, is_dog, is_searching=False):
 
     file_name = f"{key}-{file.filename}"
     if is_dog and not is_searching:
-        destination_blob_name = f"dog/{file_name}"
+        destination_blob_name = f"dog/{breed.value}/{file_name}"
     elif not is_dog and not is_searching:
-        destination_blob_name = f"cat/{file_name}"
+        destination_blob_name = f"cat/{breed.value}/{file_name}"
     else:
-        destination_blob_name = f"searching/{file_name}"
+        destination_blob_name = f"searching/{breed.value}/{file_name}"
 
     tmp_file = deepcopy(file)
     # GCS 버킷 객체 가져오기
